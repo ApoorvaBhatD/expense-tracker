@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+<title>Expense Tracker</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&display=swap');
+
+  :root {
+    --bg: #090d1a;
+    --surface: #101628;
+    --surface2: #161d35;
+    --surface3: #1c2540;
+    --accent: #3b82f6;
+    --accent2: #1d4ed8;
+    --border: #1e2d50;
+    --text: #e8eaf6;
+    --muted: #8892b0;
+    --danger: #ef4444;
+    --transport: #0ea5e9;
+    --snacks: #f59e0b;
+    --food: #22c55e;
+    --others: #a78bfa;
+    --heading-bg: #0d1830;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Outfit', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    font-size: 16px;
+  }
+
+  .app-header {
+    background: linear-gradient(135deg, #0d1830 0%, #101e3a 100%);
+    padding: 20px 16px 16px;
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .app-title {
+    font-size: 22px;
+    font-weight: 800;
+    color: #fff;
+    letter-spacing: 0.5px;
+    margin-bottom: 14px;
+  }
+
+  .app-title span { color: var(--accent); }
+
+  .input-section {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .date-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .date-label {
+    font-size: 13px;
+    color: var(--muted);
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .date-wrapper {
+    position: relative;
+    flex: 1;
+  }
+
+  input[type="date"] {
+    width: 100%;
+    background: var(--surface2);
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    color: var(--text);
+    font-family: 'Outfit', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    padding: 10px 14px;
+    outline: none;
+    -webkit-appearance: none;
+    appearance: none;
+    color-scheme: dark;
+  }
+
+  input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(1) brightness(2);
+    cursor: pointer;
+    width: 20px;
+    height: 20px;
+  }
+
+  input[type="date"]:focus {
+    border-color: var(--accent);
+  }
+
+  .expense-row {
+    display: flex;
+    gap: 8px;
+    align-items: stretch;
+  }
+
+  .expense-input {
+    flex: 1;
+    background: var(--surface2);
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    color: var(--text);
+    font-family: 'Outfit', sans-serif;
+    font-size: 15px;
+    padding: 11px 14px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .expense-input::placeholder { color: var(--muted); }
+  .expense-input:focus { border-color: var(--accent); }
+
+  .btn-add {
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    padding: 11px 18px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background 0.2s;
+  }
+
+  .btn-add:active { background: var(--accent2); }
+
+  .main-content {
+    padding: 16px;
+  }
+
+  /* MODAL */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.7);
+    z-index: 200;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+  }
+
+  .modal-overlay.active { display: flex; }
+
+  .modal {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 22px;
+    width: 100%;
+    max-width: 420px;
+    max-height: 85vh;
+    overflow-y: auto;
+  }
+
+  .modal h2 {
+    font-size: 18px;
+    font-weight: 800;
+    margin-bottom: 6px;
+    color: #fff;
+  }
+
+  .modal p {
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 18px;
+  }
+
+  .cat-item {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 14px;
+    margin-bottom: 12px;
+  }
+
+  .cat-item-name {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: var(--text);
+  }
+
+  .cat-buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+
+  .cat-btn {
+    padding: 10px 6px;
+    border: 2px solid var(--border);
+    border-radius: 8px;
+    background: var(--surface3);
+    color: var(--muted);
+    font-family: 'Outfit', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.15s;
+    text-align: center;
+  }
+
+  .cat-btn.selected-Transport { border-color: var(--transport); color: var(--transport); background: rgba(14,165,233,0.1); }
+  .cat-btn.selected-Snacks { border-color: var(--snacks); color: var(--snacks); background: rgba(245,158,11,0.1); }
+  .cat-btn.selected-Food { border-color: var(--food); color: var(--food); background: rgba(34,197,94,0.1); }
+  .cat-btn.selected-Others { border-color: var(--others); color: var(--others); background: rgba(167,139,250,0.1); }
+
+  .modal-confirm {
+    margin-top: 16px;
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    padding: 13px;
+    width: 100%;
+    font-family: 'Outfit', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+  }
+
+  /* MONTH TABLES */
+  .month-block {
+    margin-bottom: 28px;
+  }
+
+  .month-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(135deg, #0d1830, #111e3a);
+    border: 1px solid var(--border);
+    border-radius: 12px 12px 0 0;
+    padding: 13px 16px;
+  }
+
+  .month-name {
+    font-size: 17px;
+    font-weight: 800;
+    color: #fff;
+  }
+
+  .month-total {
+    font-size: 17px;
+    font-weight: 800;
+    color: var(--accent);
+  }
+
+  .table-wrap {
+    overflow-x: auto;
+    border: 1px solid var(--border);
+    border-top: none;
+    border-radius: 0 0 12px 12px;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 560px;
+  }
+
+  thead tr {
+    background: var(--heading-bg);
+  }
+
+  th {
+    padding: 11px 10px;
+    font-size: 13px;
+    font-weight: 700;
+    color: #fff;
+    text-align: left;
+    border-bottom: 2px solid var(--border);
+    white-space: nowrap;
+  }
+
+  th:first-child { min-width: 80px; }
+
+  th.th-transport { color: var(--transport); }
+  th.th-snacks { color: var(--snacks); }
+  th.th-food { color: var(--food); }
+  th.th-others { color: var(--others); }
+  th.th-total { color: #fff; text-align: right; }
+  th.th-del { width: 30px; }
+
+  td {
+    padding: 10px 10px;
+    font-size: 14px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+    color: var(--text);
+  }
+
+  tr:last-child td { border-bottom: none; }
+
+  tr:nth-child(even) { background: rgba(255,255,255,0.02); }
+
+  td.td-date {
+    font-weight: 700;
+    font-size: 13px;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+
+  td.td-empty {
+    color: var(--muted);
+    font-size: 13px;
+  }
+
+  td.td-total {
+    font-weight: 800;
+    text-align: right;
+    color: #fff;
+    white-space: nowrap;
+  }
+
+  .cell-items { display: flex; flex-direction: column; gap: 4px; }
+
+  .cell-entry {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 4px;
+    font-size: 13px;
+  }
+
+  .entry-name { color: var(--text); font-weight: 600; }
+  .entry-amt { color: var(--accent); font-weight: 700; white-space: nowrap; }
+
+  .btn-del {
+    background: none;
+    border: none;
+    color: var(--danger);
+    font-size: 16px;
+    cursor: pointer;
+    padding: 2px 4px;
+    border-radius: 4px;
+    line-height: 1;
+    opacity: 0.7;
+  }
+
+  .btn-del:active { opacity: 1; }
+
+  td.td-del { text-align: center; vertical-align: middle; width: 30px; }
+
+  .empty-state {
+    text-align: center;
+    padding: 40px 20px;
+    color: var(--muted);
+    font-size: 15px;
+  }
+
+  .toast {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #22c55e;
+    color: #fff;
+    padding: 10px 22px;
+    border-radius: 20px;
+    font-weight: 700;
+    font-size: 14px;
+    z-index: 300;
+    opacity: 0;
+    transition: opacity 0.3s;
+    pointer-events: none;
+  }
+
+  .toast.show { opacity: 1; }
+
+  .pdf-bar {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 16px;
+  }
+
+  .pdf-select {
+    flex: 1;
+    min-width: 140px;
+    background: var(--surface2);
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    color: var(--text);
+    font-family: 'Outfit', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 10px 12px;
+    outline: none;
+    appearance: none;
+    -webkit-appearance: none;
+    cursor: pointer;
+  }
+
+  .pdf-select:focus { border-color: var(--accent); }
+
+  .btn-pdf {
+    background: linear-gradient(135deg, #1e40af, #3b82f6);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 18px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .btn-pdf:active { opacity: 0.85; }
+</style>
+</head>
+<body>
+
+<div class="app-header">
+  <div class="app-title">💸 Expense <span>Tracker</span></div>
+  <div class="input-section">
+    <div class="date-row">
+      <span class="date-label">Date:</span>
+      <div class="date-wrapper">
+        <input type="date" id="dateInput"/>
+      </div>
+    </div>
+    <div class="expense-row">
+      <input class="expense-input" id="expenseInput" type="text"
+        placeholder="pasta 50, shirt 200, lunch 70"/>
+      <button class="btn-add" onclick="handleAdd()">ADD</button>
+    </div>
+  </div>
+</div>
+
+<div class="main-content">
+  <div class="pdf-bar">
+    <select class="pdf-select" id="pdfMonthSelect">
+      <option value="all">📄 All Months</option>
+    </select>
+    <button class="btn-pdf" onclick="exportPDF()">⬇️ Export PDF</button>
+  </div>
+</div>
+
+<div class="main-content" id="mainContent">
+  <div class="empty-state">No expenses yet. Add your first entry above!</div>
+</div>
+
+<!-- Category Modal -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal">
+    <h2>Categorise Items</h2>
+    <p>These are new items. Assign a category to each:</p>
+    <div id="modalItems"></div>
+    <button class="modal-confirm" onclick="confirmCategories()">Confirm & Save</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+<script>
+const CATEGORIES = ["Transport", "Snacks/Orders", "Food", "Others"];
+const CAT_CLASS = { "Transport": "Transport", "Snacks/Orders": "Snacks", "Food": "Food", "Others": "Others" };
+let pendingData = null;
+
+// Set today's date in yyyy-mm-dd for input, display as dd/mm/yyyy
+function toInputFormat(ddmmyyyy) {
+  const [d, m, y] = ddmmyyyy.split("/");
+  return `${y}-${m}-${d}`;
+}
+function toDisplayFormat(yyyymmdd) {
+  const [y, m, d] = yyyymmdd.split("-");
+  return `${d}/${m}/${y}`;
+}
+function todayInputVal() {
+  const now = new Date();
+  const y = now.getFullYear();
+  const m = String(now.getMonth()+1).padStart(2,"0");
+  const d = String(now.getDate()).padStart(2,"0");
+  return `${y}-${m}-${d}`;
+}
+function inputValToDisplay(val) {
+  // val = yyyy-mm-dd
+  const [y,m,d] = val.split("-");
+  return `${d}/${m}/${y}`;
+}
+
+document.getElementById("dateInput").value = todayInputVal();
+
+async function handleAdd() {
+  const dateVal = document.getElementById("dateInput").value;
+  const raw = document.getElementById("expenseInput").value.trim();
+  if (!dateVal || !raw) { showToast("Please fill in date and expenses", "#ef4444"); return; }
+
+  // Parse item names
+  const parts = raw.split(",").map(p => p.trim()).filter(Boolean);
+  const itemNames = [];
+  for (const part of parts) {
+    const tokens = part.trim().rsplit ? part.trim().rsplit(" ",1) : part.trim().split(" ");
+    // last token is amount
+    const name = tokens.slice(0, tokens.length-1).join(" ").trim();
+    if (name) itemNames.push(name);
+  }
+
+  // Check which items are unknown
+  const res = await fetch("/api/check_items", {
+    method: "POST", headers: {"Content-Type":"application/json"},
+    body: JSON.stringify({ items: itemNames })
+  });
+  const { unknown, known } = await res.json();
+
+  pendingData = {
+    date: inputValToDisplay(dateVal),
+    input: raw,
+    item_categories: { ...known }
+  };
+
+  if (unknown.length > 0) {
+    showModal(unknown);
+  } else {
+    await submitEntry();
+  }
+}
+
+function showModal(unknownItems) {
+  const container = document.getElementById("modalItems");
+  container.innerHTML = "";
+  unknownItems.forEach(item => {
+    const div = document.createElement("div");
+    div.className = "cat-item";
+    div.dataset.item = item;
+    div.innerHTML = `<div class="cat-item-name">📦 ${item}</div>
+      <div class="cat-buttons">
+        ${CATEGORIES.map(c => `<button class="cat-btn" data-cat="${c}" onclick="selectCat(this,'${item}')">${c}</button>`).join("")}
+      </div>`;
+    container.appendChild(div);
+  });
+  document.getElementById("modalOverlay").classList.add("active");
+}
+
+function selectCat(btn, item) {
+  const parent = btn.closest(".cat-item");
+  parent.querySelectorAll(".cat-btn").forEach(b => {
+    b.className = "cat-btn";
+  });
+  const cat = btn.dataset.cat;
+  btn.className = `cat-btn selected-${CAT_CLASS[cat]}`;
+  pendingData.item_categories[item] = cat;
+}
+
+async function confirmCategories() {
+  // Check all unknown items have been assigned
+  const items = document.querySelectorAll("#modalItems .cat-item");
+  for (const item of items) {
+    const name = item.dataset.item;
+    if (!pendingData.item_categories[name]) {
+      showToast("Please categorise all items", "#ef4444");
+      return;
+    }
+  }
+  document.getElementById("modalOverlay").classList.remove("active");
+  await submitEntry();
+}
+
+async function submitEntry() {
+  await fetch("/api/add_entry", {
+    method: "POST", headers: {"Content-Type":"application/json"},
+    body: JSON.stringify(pendingData)
+  });
+  document.getElementById("expenseInput").value = "";
+  pendingData = null;
+  showToast("Entry saved!");
+  renderAll();
+}
+
+async function deleteItem(date, id) {
+  await fetch("/api/delete_item", {
+    method: "POST", headers: {"Content-Type":"application/json"},
+    body: JSON.stringify({ date, id })
+  });
+  showToast("Deleted", "#ef4444");
+  renderAll();
+}
+
+async function exportPDF() {
+  const data = await (await fetch("/api/data")).json();
+  const expenses = data.expenses || {};
+  const selectedMonth = document.getElementById("pdfMonthSelect").value;
+  const { jsPDF } = window.jspdf;
+
+  const monthNames = ["","January","February","March","April","May","June","July","August","September","October","November","December"];
+
+  const byMonth = {};
+  for (const [date, items] of Object.entries(expenses)) {
+    const [d, m, y] = date.split("/");
+    const monthKey = `${y}-${m}`;
+    if (!byMonth[monthKey]) byMonth[monthKey] = {};
+    byMonth[monthKey][date] = items;
+  }
+
+  let monthsToExport = Object.keys(byMonth).sort();
+  if (selectedMonth !== "all") monthsToExport = monthsToExport.filter(k => k === selectedMonth);
+  if (monthsToExport.length === 0) { showToast("No data to export", "#ef4444"); return; }
+
+  const doc = new jsPDF({ orientation: "landscape", unit: "mm", format: "a4" });
+  let isFirstPage = true;
+
+  for (const monthKey of monthsToExport) {
+    const [y, m] = monthKey.split("-");
+    const mName = `${monthNames[parseInt(m)]} ${y}`;
+    const daysData = byMonth[monthKey];
+
+    const sortedDates = Object.keys(daysData).sort((a,b) => {
+      const [da,ma,ya] = a.split("/"); const [db,mb,yb] = b.split("/");
+      return new Date(`${ya}-${ma}-${da}`) - new Date(`${yb}-${mb}-${db}`);
+    });
+
+    let monthTotal = 0;
+    for (const date of sortedDates)
+      for (const item of daysData[date]) monthTotal += item.amount;
+
+    if (!isFirstPage) doc.addPage();
+    isFirstPage = false;
+
+    // Simple plain header
+    doc.setFontSize(16);
+    doc.setFont("helvetica", "bold");
+    doc.setTextColor(0, 0, 0);
+    doc.text(`Expense Tracker - ${mName}`, 14, 14);
+    doc.setFontSize(11);
+    doc.setFont("helvetica", "normal");
+    doc.text(`Total: Rs. ${monthTotal.toFixed(2)}`, 283, 14, { align: "right" });
+    doc.setDrawColor(180, 180, 180);
+    doc.line(14, 17, 283, 17);
+
+    const tableRows = [];
+    for (const date of sortedDates) {
+      const items = daysData[date];
+      const catMap = { "Transport": [], "Snacks/Orders": [], "Food": [], "Others": [] };
+      for (const item of items) {
+        if (catMap[item.category] !== undefined) catMap[item.category].push(item);
+        else catMap["Others"].push(item);
+      }
+      const dayTotal = items.reduce((s, i) => s + i.amount, 0);
+      const cellText = (catItems) => catItems.length ? catItems.map(i => `${i.name}  Rs.${i.amount}`).join("\n") : "--";
+
+      tableRows.push([
+        date,
+        cellText(catMap["Transport"]),
+        cellText(catMap["Snacks/Orders"]),
+        cellText(catMap["Food"]),
+        cellText(catMap["Others"]),
+        `Rs. ${dayTotal.toFixed(2)}`
+      ]);
+    }
+
+    doc.autoTable({
+      startY: 21,
+      head: [["Date", "Transport", "Snacks/Orders", "Food", "Others", "Total"]],
+      body: tableRows,
+      styles: {
+        font: "helvetica",
+        fontSize: 10,
+        cellPadding: 4,
+        textColor: [30, 30, 30],
+        fillColor: [255, 255, 255],
+        lineColor: [200, 200, 200],
+        lineWidth: 0.3,
+        overflow: "linebreak",
+        valign: "top"
+      },
+      headStyles: {
+        fillColor: [50, 50, 50],
+        textColor: [255, 255, 255],
+        fontStyle: "bold",
+        fontSize: 10
+      },
+      alternateRowStyles: { fillColor: [245, 245, 245] },
+      columnStyles: {
+        0: { cellWidth: 24, fontStyle: "bold" },
+        1: { cellWidth: 50 },
+        2: { cellWidth: 55 },
+        3: { cellWidth: 50 },
+        4: { cellWidth: 50 },
+        5: { cellWidth: 34, fontStyle: "bold", halign: "right" }
+      },
+      margin: { left: 14, right: 14 },
+    });
+
+    const pageH = doc.internal.pageSize.height;
+    doc.setFontSize(8);
+    doc.setTextColor(130, 130, 130);
+    doc.text(`Generated on ${new Date().toLocaleDateString("en-IN")}`, 14, pageH - 5);
+  }
+
+  const fileName = selectedMonth === "all" ? "expenses_all.pdf" : `expenses_${monthsToExport[0]}.pdf`;
+  doc.save(fileName);
+  showToast("PDF downloaded!");
+}
+
+async function renderAll() {
+  const data = await (await fetch("/api/data")).json();
+  const expenses = data.expenses || {};
+  const container = document.getElementById("mainContent");
+
+  if (Object.keys(expenses).length === 0) {
+    container.innerHTML = `<div class="empty-state">No expenses yet. Add your first entry above!</div>`;
+    return;
+  }
+  const byMonth = {};
+  for (const [date, items] of Object.entries(expenses)) {
+    const [d, m, y] = date.split("/");
+    const monthKey = `${y}-${m}`;
+    if (!byMonth[monthKey]) byMonth[monthKey] = {};
+    byMonth[monthKey][date] = items;
+  }
+
+  // Sort months descending
+  const sortedMonths = Object.keys(byMonth).sort((a,b) => b.localeCompare(a));
+
+  const monthNames = ["","January","February","March","April","May","June","July","August","September","October","November","December"];
+
+  let html = "";
+  for (const monthKey of sortedMonths) {
+    const [y, m] = monthKey.split("-");
+    const mName = `${monthNames[parseInt(m)]} ${y}`;
+    const daysData = byMonth[monthKey];
+
+    // Sort dates
+    const sortedDates = Object.keys(daysData).sort((a,b) => {
+      const [da,ma,ya] = a.split("/"); const [db,mb,yb] = b.split("/");
+      return new Date(`${ya}-${ma}-${da}`) - new Date(`${yb}-${mb}-${db}`);
+    });
+
+    // Month total
+    let monthTotal = 0;
+    for (const date of sortedDates) {
+      for (const item of daysData[date]) monthTotal += item.amount;
+    }
+
+    html += `<div class="month-block">
+      <div class="month-header">
+        <span class="month-name">📅 ${mName}</span>
+        <span class="month-total">₹${monthTotal.toFixed(2)}</span>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th class="th-transport">🚗 Transport</th>
+              <th class="th-snacks">🍔 Snacks/Orders</th>
+              <th class="th-food">🥗 Food</th>
+              <th class="th-others">✨ Others</th>
+              <th class="th-total">Total</th>
+              <th class="th-del"></th>
+            </tr>
+          </thead>
+          <tbody>`;
+
+    for (const date of sortedDates) {
+      const items = daysData[date];
+      const catMap = { "Transport": [], "Snacks/Orders": [], "Food": [], "Others": [] };
+      for (const item of items) {
+        if (catMap[item.category] !== undefined) catMap[item.category].push(item);
+        else catMap["Others"].push(item);
+      }
+      const dayTotal = items.reduce((s, i) => s + i.amount, 0);
+
+      // Count max entries per cell for rowspan logic - we'll just show all in one row
+      const cellHtml = (catItems) => {
+        if (!catItems.length) return `<td class="td-empty">--</td>`;
+        const inner = catItems.map(it =>
+          `<div class="cell-entry">
+            <span class="entry-name">${it.name}</span>
+            <span class="entry-amt">₹${it.amount}</span>
+            <button class="btn-del" onclick="deleteItem('${date}','${it.id}')">✕</button>
+          </div>`
+        ).join("");
+        return `<td><div class="cell-items">${inner}</div></td>`;
+      };
+
+      html += `<tr>
+        <td class="td-date">${date}</td>
+        ${cellHtml(catMap["Transport"])}
+        ${cellHtml(catMap["Snacks/Orders"])}
+        ${cellHtml(catMap["Food"])}
+        ${cellHtml(catMap["Others"])}
+        <td class="td-total">₹${dayTotal.toFixed(2)}</td>
+        <td class="td-del"></td>
+      </tr>`;
+    }
+
+    html += `</tbody></table></div></div>`;
+  }
+
+  container.innerHTML = html;
+
+  // Populate PDF month selector
+  const sel = document.getElementById("pdfMonthSelect");
+  const prevVal = sel.value;
+  sel.innerHTML = `<option value="all">📄 All Months</option>`;
+  for (const mk of sortedMonths) {
+    const [y, m] = mk.split("-");
+    const label = `${monthNames[parseInt(m)]} ${y}`;
+    sel.innerHTML += `<option value="${mk}">${label}</option>`;
+  }
+  if ([...sel.options].some(o => o.value === prevVal)) sel.value = prevVal;
+}
+
+function showToast(msg, color="#22c55e") {
+  const t = document.getElementById("toast");
+  t.textContent = msg;
+  t.style.background = color;
+  t.classList.add("show");
+  setTimeout(() => t.classList.remove("show"), 2500);
+}
+
+// Close modal on overlay click
+document.getElementById("modalOverlay").addEventListener("click", function(e) {
+  if (e.target === this) this.classList.remove("active");
+});
+
+renderAll();
+</script>
+</body>
+</html>
