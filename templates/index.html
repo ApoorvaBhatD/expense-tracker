@@ -8,21 +8,23 @@
   @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&display=swap');
 
   :root {
-    --bg: #090d1a;
-    --surface: #101628;
-    --surface2: #161d35;
-    --surface3: #1c2540;
+    --bg: #04070f;
+    --surface: #080d1a;
+    --surface2: #0d1225;
+    --surface3: #111830;
     --accent: #3b82f6;
     --accent2: #1d4ed8;
-    --border: #1e2d50;
+    --border: #182040;
     --text: #e8eaf6;
-    --muted: #8892b0;
+    --muted: #6b7a99;
     --danger: #ef4444;
     --transport: #0ea5e9;
     --snacks: #f59e0b;
     --food: #22c55e;
+    --specials: #f472b6;
     --others: #a78bfa;
-    --heading-bg: #0d1830;
+    --heading-bg: #070b18;
+    --total-row-bg: #0a0f20;
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -36,7 +38,7 @@
   }
 
   .app-header {
-    background: linear-gradient(135deg, #0d1830 0%, #101e3a 100%);
+    background: linear-gradient(135deg, #070b18 0%, #0a1020 100%);
     padding: 20px 16px 16px;
     border-bottom: 1px solid var(--border);
     position: sticky;
@@ -44,39 +46,13 @@
     z-index: 100;
   }
 
-  .app-title {
-    font-size: 22px;
-    font-weight: 800;
-    color: #fff;
-    letter-spacing: 0.5px;
-    margin-bottom: 14px;
-  }
-
+  .app-title { font-size: 22px; font-weight: 800; color: #fff; letter-spacing: 0.5px; margin-bottom: 14px; }
   .app-title span { color: var(--accent); }
 
-  .input-section {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-
-  .date-row {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-
-  .date-label {
-    font-size: 13px;
-    color: var(--muted);
-    font-weight: 600;
-    white-space: nowrap;
-  }
-
-  .date-wrapper {
-    position: relative;
-    flex: 1;
-  }
+  .input-section { display: flex; flex-direction: column; gap: 10px; }
+  .date-row { display: flex; align-items: center; gap: 8px; }
+  .date-label { font-size: 13px; color: var(--muted); font-weight: 600; white-space: nowrap; }
+  .date-wrapper { position: relative; flex: 1; }
 
   input[type="date"] {
     width: 100%;
@@ -101,15 +77,9 @@
     height: 20px;
   }
 
-  input[type="date"]:focus {
-    border-color: var(--accent);
-  }
+  input[type="date"]:focus { border-color: var(--accent); }
 
-  .expense-row {
-    display: flex;
-    gap: 8px;
-    align-items: stretch;
-  }
+  .expense-row { display: flex; gap: 8px; align-items: stretch; }
 
   .expense-input {
     flex: 1;
@@ -138,21 +108,18 @@
     font-weight: 700;
     cursor: pointer;
     white-space: nowrap;
-    transition: background 0.2s;
   }
 
   .btn-add:active { background: var(--accent2); }
 
-  .main-content {
-    padding: 16px;
-  }
+  .main-content { padding: 16px; }
 
   /* MODAL */
   .modal-overlay {
     display: none;
     position: fixed;
     inset: 0;
-    background: rgba(0,0,0,0.7);
+    background: rgba(0,0,0,0.8);
     z-index: 200;
     align-items: center;
     justify-content: center;
@@ -172,18 +139,8 @@
     overflow-y: auto;
   }
 
-  .modal h2 {
-    font-size: 18px;
-    font-weight: 800;
-    margin-bottom: 6px;
-    color: #fff;
-  }
-
-  .modal p {
-    font-size: 13px;
-    color: var(--muted);
-    margin-bottom: 18px;
-  }
+  .modal h2 { font-size: 18px; font-weight: 800; margin-bottom: 6px; color: #fff; }
+  .modal p { font-size: 13px; color: var(--muted); margin-bottom: 18px; }
 
   .cat-item {
     background: var(--surface2);
@@ -193,18 +150,9 @@
     margin-bottom: 12px;
   }
 
-  .cat-item-name {
-    font-size: 16px;
-    font-weight: 700;
-    margin-bottom: 10px;
-    color: var(--text);
-  }
+  .cat-item-name { font-size: 16px; font-weight: 700; margin-bottom: 10px; color: var(--text); }
 
-  .cat-buttons {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 8px;
-  }
+  .cat-buttons { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
 
   .cat-btn {
     padding: 10px 6px;
@@ -220,10 +168,11 @@
     text-align: center;
   }
 
-  .cat-btn.selected-Transport { border-color: var(--transport); color: var(--transport); background: rgba(14,165,233,0.1); }
-  .cat-btn.selected-Snacks { border-color: var(--snacks); color: var(--snacks); background: rgba(245,158,11,0.1); }
-  .cat-btn.selected-Food { border-color: var(--food); color: var(--food); background: rgba(34,197,94,0.1); }
-  .cat-btn.selected-Others { border-color: var(--others); color: var(--others); background: rgba(167,139,250,0.1); }
+  .cat-btn.sel-Transport { border-color: var(--transport); color: var(--transport); background: rgba(14,165,233,0.1); }
+  .cat-btn.sel-Snacks    { border-color: var(--snacks);    color: var(--snacks);    background: rgba(245,158,11,0.1); }
+  .cat-btn.sel-Food      { border-color: var(--food);      color: var(--food);      background: rgba(34,197,94,0.1); }
+  .cat-btn.sel-Specials  { border-color: var(--specials);  color: var(--specials);  background: rgba(244,114,182,0.1); }
+  .cat-btn.sel-Others    { border-color: var(--others);    color: var(--others);    background: rgba(167,139,250,0.1); }
 
   .modal-confirm {
     margin-top: 16px;
@@ -239,32 +188,54 @@
     cursor: pointer;
   }
 
-  /* MONTH TABLES */
-  .month-block {
-    margin-bottom: 28px;
+  /* PDF BAR */
+  .pdf-bar { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin-bottom: 16px; }
+
+  .pdf-select {
+    flex: 1;
+    min-width: 140px;
+    background: var(--surface2);
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    color: var(--text);
+    font-family: 'Outfit', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 10px 12px;
+    outline: none;
+    appearance: none;
+    -webkit-appearance: none;
+    cursor: pointer;
   }
+
+  .btn-pdf {
+    background: linear-gradient(135deg, #1e40af, #3b82f6);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 18px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+
+  /* MONTH TABLES */
+  .month-block { margin-bottom: 28px; }
 
   .month-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: linear-gradient(135deg, #0d1830, #111e3a);
+    background: linear-gradient(135deg, #070b18, #0a1020);
     border: 1px solid var(--border);
     border-radius: 12px 12px 0 0;
     padding: 13px 16px;
   }
 
-  .month-name {
-    font-size: 17px;
-    font-weight: 800;
-    color: #fff;
-  }
-
-  .month-total {
-    font-size: 17px;
-    font-weight: 800;
-    color: var(--accent);
-  }
+  .month-name { font-size: 17px; font-weight: 800; color: #fff; }
+  .month-total { font-size: 17px; font-weight: 800; color: var(--accent); }
 
   .table-wrap {
     overflow-x: auto;
@@ -273,101 +244,92 @@
     border-radius: 0 0 12px 12px;
   }
 
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    min-width: 560px;
-  }
+  table { width: 100%; border-collapse: collapse; min-width: 760px; }
 
-  thead tr {
+  thead tr.row-cat th {
     background: var(--heading-bg);
+    padding: 10px 8px 4px;
+    font-size: 13px;
+    font-weight: 800;
+    text-align: center;
+    border-bottom: none;
+    white-space: nowrap;
+    border-right: 1px solid var(--border);
   }
 
-  th {
-    padding: 11px 10px;
-    font-size: 13px;
-    font-weight: 700;
-    color: #fff;
-    text-align: left;
+  thead tr.row-sub th {
+    background: var(--heading-bg);
+    padding: 4px 8px 10px;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--muted);
+    text-align: center;
     border-bottom: 2px solid var(--border);
+    border-right: 1px solid var(--border);
     white-space: nowrap;
   }
 
-  th:first-child { min-width: 80px; }
+  th.th-date   { text-align: left; vertical-align: middle; border-right: 1px solid var(--border); }
+  th.th-total-h { text-align: right; vertical-align: middle; color: #fff; border-right: 1px solid var(--border); }
+  th.th-del-h  { width: 10px; vertical-align: middle; }
 
   th.th-transport { color: var(--transport); }
-  th.th-snacks { color: var(--snacks); }
-  th.th-food { color: var(--food); }
-  th.th-others { color: var(--others); }
-  th.th-total { color: #fff; text-align: right; }
-  th.th-del { width: 30px; }
+  th.th-snacks    { color: var(--snacks); }
+  th.th-food      { color: var(--food); }
+  th.th-specials  { color: var(--specials); }
+  th.th-others    { color: var(--others); }
 
   td {
-    padding: 10px 10px;
-    font-size: 14px;
+    padding: 9px 8px;
+    font-size: 13px;
     border-bottom: 1px solid var(--border);
+    border-right: 1px solid var(--border);
     vertical-align: top;
     color: var(--text);
   }
 
-  tr:last-child td { border-bottom: none; }
+  td:last-child { border-right: none; }
+  tr:nth-child(even) td { background: rgba(255,255,255,0.015); }
 
-  tr:nth-child(even) { background: rgba(255,255,255,0.02); }
+  td.td-date { font-weight: 700; font-size: 13px; color: var(--muted); white-space: nowrap; vertical-align: middle; }
+  td.td-name { color: var(--text); font-weight: 500; min-width: 65px; }
+  td.td-price { color: var(--accent); font-weight: 700; text-align: right; white-space: nowrap; min-width: 50px; }
+  td.td-empty { color: var(--muted); text-align: center; vertical-align: middle; }
+  td.td-total { font-weight: 800; text-align: right; color: #fff; white-space: nowrap; vertical-align: middle; }
 
-  td.td-date {
-    font-weight: 700;
-    font-size: 13px;
-    color: var(--muted);
-    white-space: nowrap;
-  }
-
-  td.td-empty {
-    color: var(--muted);
-    font-size: 13px;
-  }
-
-  td.td-total {
+  tr.totals-row td {
+    background: var(--total-row-bg) !important;
+    border-top: 2px solid var(--border);
     font-weight: 800;
-    text-align: right;
-    color: #fff;
-    white-space: nowrap;
-  }
-
-  .cell-items { display: flex; flex-direction: column; gap: 4px; }
-
-  .cell-entry {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 4px;
     font-size: 13px;
+    text-align: center;
+    color: #fff;
+    vertical-align: middle;
   }
 
-  .entry-name { color: var(--text); font-weight: 600; }
-  .entry-amt { color: var(--accent); font-weight: 700; white-space: nowrap; }
+  tr.totals-row td.tot-label { color: var(--muted); font-size: 11px; letter-spacing: 0.5px; }
+  tr.totals-row td.tot-grand { text-align: right; color: var(--accent); font-size: 14px; }
+
+  .item-lines { display: flex; flex-direction: column; gap: 4px; }
+
+  .item-line { display: flex; align-items: center; gap: 4px; font-size: 13px; line-height: 1.4; }
+  .price-line { font-size: 13px; line-height: 1.4; text-align: right; }
 
   .btn-del {
     background: none;
     border: none;
     color: var(--danger);
-    font-size: 16px;
+    font-size: 13px;
     cursor: pointer;
-    padding: 2px 4px;
-    border-radius: 4px;
+    padding: 0 2px;
+    opacity: 0.6;
     line-height: 1;
-    opacity: 0.7;
+    flex-shrink: 0;
   }
 
   .btn-del:active { opacity: 1; }
 
-  td.td-del { text-align: center; vertical-align: middle; width: 30px; }
-
-  .empty-state {
-    text-align: center;
-    padding: 40px 20px;
-    color: var(--muted);
-    font-size: 15px;
-  }
+  .empty-state { text-align: center; padding: 40px 20px; color: var(--muted); font-size: 15px; }
 
   .toast {
     position: fixed;
@@ -387,51 +349,6 @@
   }
 
   .toast.show { opacity: 1; }
-
-  .pdf-bar {
-    display: flex;
-    gap: 8px;
-    align-items: center;
-    flex-wrap: wrap;
-    margin-bottom: 16px;
-  }
-
-  .pdf-select {
-    flex: 1;
-    min-width: 140px;
-    background: var(--surface2);
-    border: 1.5px solid var(--border);
-    border-radius: 10px;
-    color: var(--text);
-    font-family: 'Outfit', sans-serif;
-    font-size: 14px;
-    font-weight: 600;
-    padding: 10px 12px;
-    outline: none;
-    appearance: none;
-    -webkit-appearance: none;
-    cursor: pointer;
-  }
-
-  .pdf-select:focus { border-color: var(--accent); }
-
-  .btn-pdf {
-    background: linear-gradient(135deg, #1e40af, #3b82f6);
-    color: #fff;
-    border: none;
-    border-radius: 10px;
-    padding: 10px 18px;
-    font-family: 'Outfit', sans-serif;
-    font-size: 14px;
-    font-weight: 700;
-    cursor: pointer;
-    white-space: nowrap;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-  }
-
-  .btn-pdf:active { opacity: 0.85; }
 </style>
 </head>
 <body>
@@ -446,8 +363,7 @@
       </div>
     </div>
     <div class="expense-row">
-      <input class="expense-input" id="expenseInput" type="text"
-        placeholder="pasta 50, shirt 200, lunch 70"/>
+      <input class="expense-input" id="expenseInput" type="text" placeholder="pasta 50, shirt 200, lunch 70"/>
       <button class="btn-add" onclick="handleAdd()">ADD</button>
     </div>
   </div>
@@ -456,9 +372,9 @@
 <div class="main-content">
   <div class="pdf-bar">
     <select class="pdf-select" id="pdfMonthSelect">
-      <option value="all">📄 All Months</option>
+      <option value="all">All Months</option>
     </select>
-    <button class="btn-pdf" onclick="exportPDF()">⬇️ Export PDF</button>
+    <button class="btn-pdf" onclick="exportPDF()">Export PDF</button>
   </div>
 </div>
 
@@ -466,7 +382,6 @@
   <div class="empty-state">No expenses yet. Add your first entry above!</div>
 </div>
 
-<!-- Category Modal -->
 <div class="modal-overlay" id="modalOverlay">
   <div class="modal">
     <h2>Categorise Items</h2>
@@ -481,28 +396,15 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
 <script>
-const CATEGORIES = ["Transport", "Snacks/Orders", "Food", "Others"];
-const CAT_CLASS = { "Transport": "Transport", "Snacks/Orders": "Snacks", "Food": "Food", "Others": "Others" };
+const CATEGORIES = ["Transport", "Snacks/Orders", "Food", "Specials", "Others"];
+const CAT_KEY = { "Transport":"Transport", "Snacks/Orders":"Snacks", "Food":"Food", "Specials":"Specials", "Others":"Others" };
 let pendingData = null;
 
-// Set today's date in yyyy-mm-dd for input, display as dd/mm/yyyy
-function toInputFormat(ddmmyyyy) {
-  const [d, m, y] = ddmmyyyy.split("/");
-  return `${y}-${m}-${d}`;
-}
-function toDisplayFormat(yyyymmdd) {
-  const [y, m, d] = yyyymmdd.split("-");
-  return `${d}/${m}/${y}`;
-}
 function todayInputVal() {
   const now = new Date();
-  const y = now.getFullYear();
-  const m = String(now.getMonth()+1).padStart(2,"0");
-  const d = String(now.getDate()).padStart(2,"0");
-  return `${y}-${m}-${d}`;
+  return `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,"0")}-${String(now.getDate()).padStart(2,"0")}`;
 }
 function inputValToDisplay(val) {
-  // val = yyyy-mm-dd
   const [y,m,d] = val.split("-");
   return `${d}/${m}/${y}`;
 }
@@ -514,34 +416,24 @@ async function handleAdd() {
   const raw = document.getElementById("expenseInput").value.trim();
   if (!dateVal || !raw) { showToast("Please fill in date and expenses", "#ef4444"); return; }
 
-  // Parse item names
   const parts = raw.split(",").map(p => p.trim()).filter(Boolean);
   const itemNames = [];
   for (const part of parts) {
-    const tokens = part.trim().rsplit ? part.trim().rsplit(" ",1) : part.trim().split(" ");
-    // last token is amount
-    const name = tokens.slice(0, tokens.length-1).join(" ").trim();
+    const tokens = part.trim().split(" ");
+    const name = tokens.slice(0, tokens.length - 1).join(" ").trim();
     if (name) itemNames.push(name);
   }
 
-  // Check which items are unknown
   const res = await fetch("/api/check_items", {
     method: "POST", headers: {"Content-Type":"application/json"},
     body: JSON.stringify({ items: itemNames })
   });
   const { unknown, known } = await res.json();
 
-  pendingData = {
-    date: inputValToDisplay(dateVal),
-    input: raw,
-    item_categories: { ...known }
-  };
+  pendingData = { date: inputValToDisplay(dateVal), input: raw, item_categories: { ...known } };
 
-  if (unknown.length > 0) {
-    showModal(unknown);
-  } else {
-    await submitEntry();
-  }
+  if (unknown.length > 0) showModal(unknown);
+  else await submitEntry();
 }
 
 function showModal(unknownItems) {
@@ -551,7 +443,7 @@ function showModal(unknownItems) {
     const div = document.createElement("div");
     div.className = "cat-item";
     div.dataset.item = item;
-    div.innerHTML = `<div class="cat-item-name">📦 ${item}</div>
+    div.innerHTML = `<div class="cat-item-name">${item}</div>
       <div class="cat-buttons">
         ${CATEGORIES.map(c => `<button class="cat-btn" data-cat="${c}" onclick="selectCat(this,'${item}')">${c}</button>`).join("")}
       </div>`;
@@ -561,23 +453,17 @@ function showModal(unknownItems) {
 }
 
 function selectCat(btn, item) {
-  const parent = btn.closest(".cat-item");
-  parent.querySelectorAll(".cat-btn").forEach(b => {
-    b.className = "cat-btn";
-  });
+  btn.closest(".cat-item").querySelectorAll(".cat-btn").forEach(b => b.className = "cat-btn");
   const cat = btn.dataset.cat;
-  btn.className = `cat-btn selected-${CAT_CLASS[cat]}`;
+  btn.className = `cat-btn sel-${CAT_KEY[cat]}`;
   pendingData.item_categories[item] = cat;
 }
 
 async function confirmCategories() {
-  // Check all unknown items have been assigned
   const items = document.querySelectorAll("#modalItems .cat-item");
   for (const item of items) {
-    const name = item.dataset.item;
-    if (!pendingData.item_categories[name]) {
-      showToast("Please categorise all items", "#ef4444");
-      return;
+    if (!pendingData.item_categories[item.dataset.item]) {
+      showToast("Please categorise all items", "#ef4444"); return;
     }
   }
   document.getElementById("modalOverlay").classList.remove("active");
@@ -604,121 +490,7 @@ async function deleteItem(date, id) {
   renderAll();
 }
 
-async function exportPDF() {
-  const data = await (await fetch("/api/data")).json();
-  const expenses = data.expenses || {};
-  const selectedMonth = document.getElementById("pdfMonthSelect").value;
-  const { jsPDF } = window.jspdf;
-
-  const monthNames = ["","January","February","March","April","May","June","July","August","September","October","November","December"];
-
-  const byMonth = {};
-  for (const [date, items] of Object.entries(expenses)) {
-    const [d, m, y] = date.split("/");
-    const monthKey = `${y}-${m}`;
-    if (!byMonth[monthKey]) byMonth[monthKey] = {};
-    byMonth[monthKey][date] = items;
-  }
-
-  let monthsToExport = Object.keys(byMonth).sort();
-  if (selectedMonth !== "all") monthsToExport = monthsToExport.filter(k => k === selectedMonth);
-  if (monthsToExport.length === 0) { showToast("No data to export", "#ef4444"); return; }
-
-  const doc = new jsPDF({ orientation: "landscape", unit: "mm", format: "a4" });
-  let isFirstPage = true;
-
-  for (const monthKey of monthsToExport) {
-    const [y, m] = monthKey.split("-");
-    const mName = `${monthNames[parseInt(m)]} ${y}`;
-    const daysData = byMonth[monthKey];
-
-    const sortedDates = Object.keys(daysData).sort((a,b) => {
-      const [da,ma,ya] = a.split("/"); const [db,mb,yb] = b.split("/");
-      return new Date(`${ya}-${ma}-${da}`) - new Date(`${yb}-${mb}-${db}`);
-    });
-
-    let monthTotal = 0;
-    for (const date of sortedDates)
-      for (const item of daysData[date]) monthTotal += item.amount;
-
-    if (!isFirstPage) doc.addPage();
-    isFirstPage = false;
-
-    // Simple plain header
-    doc.setFontSize(16);
-    doc.setFont("helvetica", "bold");
-    doc.setTextColor(0, 0, 0);
-    doc.text(`Expense Tracker - ${mName}`, 14, 14);
-    doc.setFontSize(11);
-    doc.setFont("helvetica", "normal");
-    doc.text(`Total: Rs. ${monthTotal.toFixed(2)}`, 283, 14, { align: "right" });
-    doc.setDrawColor(180, 180, 180);
-    doc.line(14, 17, 283, 17);
-
-    const tableRows = [];
-    for (const date of sortedDates) {
-      const items = daysData[date];
-      const catMap = { "Transport": [], "Snacks/Orders": [], "Food": [], "Others": [] };
-      for (const item of items) {
-        if (catMap[item.category] !== undefined) catMap[item.category].push(item);
-        else catMap["Others"].push(item);
-      }
-      const dayTotal = items.reduce((s, i) => s + i.amount, 0);
-      const cellText = (catItems) => catItems.length ? catItems.map(i => `${i.name}  Rs.${i.amount}`).join("\n") : "--";
-
-      tableRows.push([
-        date,
-        cellText(catMap["Transport"]),
-        cellText(catMap["Snacks/Orders"]),
-        cellText(catMap["Food"]),
-        cellText(catMap["Others"]),
-        `Rs. ${dayTotal.toFixed(2)}`
-      ]);
-    }
-
-    doc.autoTable({
-      startY: 21,
-      head: [["Date", "Transport", "Snacks/Orders", "Food", "Others", "Total"]],
-      body: tableRows,
-      styles: {
-        font: "helvetica",
-        fontSize: 10,
-        cellPadding: 4,
-        textColor: [30, 30, 30],
-        fillColor: [255, 255, 255],
-        lineColor: [200, 200, 200],
-        lineWidth: 0.3,
-        overflow: "linebreak",
-        valign: "top"
-      },
-      headStyles: {
-        fillColor: [50, 50, 50],
-        textColor: [255, 255, 255],
-        fontStyle: "bold",
-        fontSize: 10
-      },
-      alternateRowStyles: { fillColor: [245, 245, 245] },
-      columnStyles: {
-        0: { cellWidth: 24, fontStyle: "bold" },
-        1: { cellWidth: 50 },
-        2: { cellWidth: 55 },
-        3: { cellWidth: 50 },
-        4: { cellWidth: 50 },
-        5: { cellWidth: 34, fontStyle: "bold", halign: "right" }
-      },
-      margin: { left: 14, right: 14 },
-    });
-
-    const pageH = doc.internal.pageSize.height;
-    doc.setFontSize(8);
-    doc.setTextColor(130, 130, 130);
-    doc.text(`Generated on ${new Date().toLocaleDateString("en-IN")}`, 14, pageH - 5);
-  }
-
-  const fileName = selectedMonth === "all" ? "expenses_all.pdf" : `expenses_${monthsToExport[0]}.pdf`;
-  doc.save(fileName);
-  showToast("PDF downloaded!");
-}
+function fmt(n) { return n % 1 === 0 ? n : n.toFixed(2); }
 
 async function renderAll() {
   const data = await (await fetch("/api/data")).json();
@@ -729,77 +501,84 @@ async function renderAll() {
     container.innerHTML = `<div class="empty-state">No expenses yet. Add your first entry above!</div>`;
     return;
   }
+
   const byMonth = {};
   for (const [date, items] of Object.entries(expenses)) {
     const [d, m, y] = date.split("/");
-    const monthKey = `${y}-${m}`;
-    if (!byMonth[monthKey]) byMonth[monthKey] = {};
-    byMonth[monthKey][date] = items;
+    const mk = `${y}-${m}`;
+    if (!byMonth[mk]) byMonth[mk] = {};
+    byMonth[mk][date] = items;
   }
 
-  // Sort months descending
   const sortedMonths = Object.keys(byMonth).sort((a,b) => b.localeCompare(a));
-
   const monthNames = ["","January","February","March","April","May","June","July","August","September","October","November","December"];
 
   let html = "";
-  for (const monthKey of sortedMonths) {
-    const [y, m] = monthKey.split("-");
-    const mName = `${monthNames[parseInt(m)]} ${y}`;
-    const daysData = byMonth[monthKey];
 
-    // Sort dates
+  for (const mk of sortedMonths) {
+    const [y, m] = mk.split("-");
+    const mName = `${monthNames[parseInt(m)]} ${y}`;
+    const daysData = byMonth[mk];
+
     const sortedDates = Object.keys(daysData).sort((a,b) => {
       const [da,ma,ya] = a.split("/"); const [db,mb,yb] = b.split("/");
       return new Date(`${ya}-${ma}-${da}`) - new Date(`${yb}-${mb}-${db}`);
     });
 
-    // Month total
     let monthTotal = 0;
-    for (const date of sortedDates) {
-      for (const item of daysData[date]) monthTotal += item.amount;
-    }
+    const catTotals = { "Transport":0, "Snacks/Orders":0, "Food":0, "Specials":0, "Others":0 };
+    for (const date of sortedDates)
+      for (const item of daysData[date]) {
+        monthTotal += item.amount;
+        const cat = CATEGORIES.includes(item.category) ? item.category : "Others";
+        catTotals[cat] += item.amount;
+      }
 
     html += `<div class="month-block">
       <div class="month-header">
         <span class="month-name">📅 ${mName}</span>
-        <span class="month-total">₹${monthTotal.toFixed(2)}</span>
+        <span class="month-total">₹${fmt(monthTotal)}</span>
       </div>
-      <div class="table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th>Date</th>
-              <th class="th-transport">🚗 Transport</th>
-              <th class="th-snacks">🍔 Snacks/Orders</th>
-              <th class="th-food">🥗 Food</th>
-              <th class="th-others">✨ Others</th>
-              <th class="th-total">Total</th>
-              <th class="th-del"></th>
-            </tr>
-          </thead>
-          <tbody>`;
+      <div class="table-wrap"><table>
+        <thead>
+          <tr class="row-cat">
+            <th class="th-date" rowspan="2">Date</th>
+            <th class="th-transport" colspan="2">Transport</th>
+            <th class="th-snacks"    colspan="2">Snacks/Orders</th>
+            <th class="th-food"      colspan="2">Food</th>
+            <th class="th-specials"  colspan="2">Specials</th>
+            <th class="th-others"    colspan="2">Others</th>
+            <th class="th-total-h"   rowspan="2">Total</th>
+            <th class="th-del-h"     rowspan="2"></th>
+          </tr>
+          <tr class="row-sub">
+            <th>Item</th><th>Price</th>
+            <th>Item</th><th>Price</th>
+            <th>Item</th><th>Price</th>
+            <th>Item</th><th>Price</th>
+            <th>Item</th><th>Price</th>
+          </tr>
+        </thead>
+        <tbody>`;
 
     for (const date of sortedDates) {
       const items = daysData[date];
-      const catMap = { "Transport": [], "Snacks/Orders": [], "Food": [], "Others": [] };
+      const catMap = { "Transport":[], "Snacks/Orders":[], "Food":[], "Specials":[], "Others":[] };
       for (const item of items) {
-        if (catMap[item.category] !== undefined) catMap[item.category].push(item);
-        else catMap["Others"].push(item);
+        const cat = CATEGORIES.includes(item.category) ? item.category : "Others";
+        catMap[cat].push(item);
       }
-      const dayTotal = items.reduce((s, i) => s + i.amount, 0);
+      const dayTotal = items.reduce((s,i) => s + i.amount, 0);
 
-      // Count max entries per cell for rowspan logic - we'll just show all in one row
       const cellHtml = (catItems) => {
-        if (!catItems.length) return `<td class="td-empty">--</td>`;
-        const inner = catItems.map(it =>
-          `<div class="cell-entry">
-            <span class="entry-name">${it.name}</span>
-            <span class="entry-amt">₹${it.amount}</span>
-            <button class="btn-del" onclick="deleteItem('${date}','${it.id}')">✕</button>
-          </div>`
+        if (!catItems.length) return `<td class="td-empty" colspan="2">--</td>`;
+        const names = catItems.map(it =>
+          `<div class="item-line"><button class="btn-del" onclick="deleteItem('${date}','${it.id}')">✕</button><span>${it.name}</span></div>`
         ).join("");
-        return `<td><div class="cell-items">${inner}</div></td>`;
+        const prices = catItems.map(it =>
+          `<div class="price-line">₹${fmt(it.amount)}</div>`
+        ).join("");
+        return `<td class="td-name"><div class="item-lines">${names}</div></td><td class="td-price"><div class="item-lines">${prices}</div></td>`;
       };
 
       html += `<tr>
@@ -807,11 +586,25 @@ async function renderAll() {
         ${cellHtml(catMap["Transport"])}
         ${cellHtml(catMap["Snacks/Orders"])}
         ${cellHtml(catMap["Food"])}
+        ${cellHtml(catMap["Specials"])}
         ${cellHtml(catMap["Others"])}
-        <td class="td-total">₹${dayTotal.toFixed(2)}</td>
-        <td class="td-del"></td>
+        <td class="td-total">₹${fmt(dayTotal)}</td>
+        <td></td>
       </tr>`;
     }
+
+    // Totals row
+    const fmtTot = (n) => n > 0 ? `₹${fmt(n)}` : `--`;
+    html += `<tr class="totals-row">
+      <td class="tot-label">TOTAL</td>
+      <td colspan="2">${fmtTot(catTotals["Transport"])}</td>
+      <td colspan="2">${fmtTot(catTotals["Snacks/Orders"])}</td>
+      <td colspan="2">${fmtTot(catTotals["Food"])}</td>
+      <td colspan="2">${fmtTot(catTotals["Specials"])}</td>
+      <td colspan="2">${fmtTot(catTotals["Others"])}</td>
+      <td class="tot-grand">₹${fmt(monthTotal)}</td>
+      <td></td>
+    </tr>`;
 
     html += `</tbody></table></div></div>`;
   }
@@ -821,13 +614,113 @@ async function renderAll() {
   // Populate PDF month selector
   const sel = document.getElementById("pdfMonthSelect");
   const prevVal = sel.value;
-  sel.innerHTML = `<option value="all">📄 All Months</option>`;
+  sel.innerHTML = `<option value="all">All Months</option>`;
   for (const mk of sortedMonths) {
     const [y, m] = mk.split("-");
-    const label = `${monthNames[parseInt(m)]} ${y}`;
-    sel.innerHTML += `<option value="${mk}">${label}</option>`;
+    sel.innerHTML += `<option value="${mk}">${monthNames[parseInt(m)]} ${y}</option>`;
   }
   if ([...sel.options].some(o => o.value === prevVal)) sel.value = prevVal;
+}
+
+async function exportPDF() {
+  const data = await (await fetch("/api/data")).json();
+  const expenses = data.expenses || {};
+  const selectedMonth = document.getElementById("pdfMonthSelect").value;
+  const { jsPDF } = window.jspdf;
+  const monthNames = ["","January","February","March","April","May","June","July","August","September","October","November","December"];
+
+  const byMonth = {};
+  for (const [date, items] of Object.entries(expenses)) {
+    const [d, m, y] = date.split("/");
+    const mk = `${y}-${m}`;
+    if (!byMonth[mk]) byMonth[mk] = {};
+    byMonth[mk][date] = items;
+  }
+
+  let monthsToExport = Object.keys(byMonth).sort();
+  if (selectedMonth !== "all") monthsToExport = monthsToExport.filter(k => k === selectedMonth);
+  if (monthsToExport.length === 0) { showToast("No data to export", "#ef4444"); return; }
+
+  const doc = new jsPDF({ orientation: "landscape", unit: "mm", format: "a4" });
+  let isFirstPage = true;
+
+  for (const mk of monthsToExport) {
+    const [y, m] = mk.split("-");
+    const mName = `${monthNames[parseInt(m)]} ${y}`;
+    const daysData = byMonth[mk];
+
+    const sortedDates = Object.keys(daysData).sort((a,b) => {
+      const [da,ma,ya] = a.split("/"); const [db,mb,yb] = b.split("/");
+      return new Date(`${ya}-${ma}-${da}`) - new Date(`${yb}-${mb}-${db}`);
+    });
+
+    let monthTotal = 0;
+    const catTotals = { "Transport":0, "Snacks/Orders":0, "Food":0, "Specials":0, "Others":0 };
+    for (const date of sortedDates)
+      for (const item of daysData[date]) {
+        monthTotal += item.amount;
+        const cat = CATEGORIES.includes(item.category) ? item.category : "Others";
+        catTotals[cat] += item.amount;
+      }
+
+    if (!isFirstPage) doc.addPage();
+    isFirstPage = false;
+
+    doc.setFontSize(15); doc.setFont("helvetica", "bold"); doc.setTextColor(0,0,0);
+    doc.text(`Expense Tracker - ${mName}`, 14, 13);
+    doc.setFontSize(11); doc.setFont("helvetica", "normal");
+    doc.text(`Total: Rs. ${monthTotal.toFixed(2)}`, 283, 13, { align: "right" });
+    doc.setDrawColor(180,180,180);
+    doc.line(14, 16, 283, 16);
+
+    const tableRows = [];
+    for (const date of sortedDates) {
+      const items = daysData[date];
+      const catMap = { "Transport":[], "Snacks/Orders":[], "Food":[], "Specials":[], "Others":[] };
+      for (const item of items) {
+        const cat = CATEGORIES.includes(item.category) ? item.category : "Others";
+        catMap[cat].push(item);
+      }
+      const dayTotal = items.reduce((s,i) => s + i.amount, 0);
+      const cellText = (arr) => arr.length ? arr.map(i => `${i.name}  Rs.${i.amount}`).join("\n") : "--";
+      tableRows.push([date, cellText(catMap["Transport"]), cellText(catMap["Snacks/Orders"]), cellText(catMap["Food"]), cellText(catMap["Specials"]), cellText(catMap["Others"]), `Rs. ${dayTotal.toFixed(2)}`]);
+    }
+
+    const fmtPDF = (n) => n > 0 ? `Rs. ${n.toFixed(2)}` : "--";
+    tableRows.push(["TOTAL", fmtPDF(catTotals["Transport"]), fmtPDF(catTotals["Snacks/Orders"]), fmtPDF(catTotals["Food"]), fmtPDF(catTotals["Specials"]), fmtPDF(catTotals["Others"]), `Rs. ${monthTotal.toFixed(2)}`]);
+
+    doc.autoTable({
+      startY: 20,
+      head: [["Date", "Transport", "Snacks/Orders", "Food", "Specials", "Others", "Total"]],
+      body: tableRows,
+      styles: { font: "helvetica", fontSize: 9, cellPadding: 3, textColor: [30,30,30], fillColor: [255,255,255], lineColor: [200,200,200], lineWidth: 0.3, overflow: "linebreak", valign: "top" },
+      headStyles: { fillColor: [40,40,40], textColor: [255,255,255], fontStyle: "bold", fontSize: 9 },
+      alternateRowStyles: { fillColor: [245,245,245] },
+      didParseCell: (d) => {
+        if (d.row.index === tableRows.length - 1) {
+          d.cell.styles.fillColor = [215,215,215];
+          d.cell.styles.fontStyle = "bold";
+        }
+      },
+      columnStyles: {
+        0: { cellWidth: 22, fontStyle: "bold" },
+        1: { cellWidth: 40 },
+        2: { cellWidth: 44 },
+        3: { cellWidth: 40 },
+        4: { cellWidth: 40 },
+        5: { cellWidth: 40 },
+        6: { cellWidth: 30, fontStyle: "bold", halign: "right" }
+      },
+      margin: { left: 14, right: 14 },
+    });
+
+    const pageH = doc.internal.pageSize.height;
+    doc.setFontSize(8); doc.setTextColor(130,130,130);
+    doc.text(`Generated on ${new Date().toLocaleDateString("en-IN")}`, 14, pageH - 5);
+  }
+
+  doc.save(selectedMonth === "all" ? "expenses_all.pdf" : `expenses_${monthsToExport[0]}.pdf`);
+  showToast("PDF downloaded!");
 }
 
 function showToast(msg, color="#22c55e") {
@@ -838,7 +731,6 @@ function showToast(msg, color="#22c55e") {
   setTimeout(() => t.classList.remove("show"), 2500);
 }
 
-// Close modal on overlay click
 document.getElementById("modalOverlay").addEventListener("click", function(e) {
   if (e.target === this) this.classList.remove("active");
 });
