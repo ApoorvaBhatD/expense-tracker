@@ -71,7 +71,7 @@
   }
 
   input[type="date"]::-webkit-calendar-picker-indicator {
-    filter: invert(1) brightness(2);
+    filter: invert(1) brightness(10);
     cursor: pointer;
     width: 20px;
     height: 20px;
@@ -363,7 +363,7 @@
       </div>
     </div>
     <div class="expense-row">
-      <input class="expense-input" id="expenseInput" type="text" placeholder="pasta 50, shirt 200, lunch 70"/>
+      <input class="expense-input" id="expenseInput" type="text" placeholder=""/>
       <button class="btn-add" onclick="handleAdd()">ADD</button>
     </div>
   </div>
@@ -542,22 +542,16 @@ async function renderAll() {
       <div class="table-wrap"><table>
         <thead>
           <tr class="row-cat">
-            <th class="th-date" rowspan="2">Date</th>
+            <th class="th-date">Date</th>
             <th class="th-transport" colspan="2">Transport</th>
             <th class="th-snacks"    colspan="2">Snacks/Orders</th>
             <th class="th-food"      colspan="2">Food</th>
             <th class="th-specials"  colspan="2">Specials</th>
             <th class="th-others"    colspan="2">Others</th>
-            <th class="th-total-h"   rowspan="2">Total</th>
-            <th class="th-del-h"     rowspan="2"></th>
+            <th class="th-total-h">Total</th>
+            <th class="th-del-h"></th>
           </tr>
-          <tr class="row-sub">
-            <th>Item</th><th>Price</th>
-            <th>Item</th><th>Price</th>
-            <th>Item</th><th>Price</th>
-            <th>Item</th><th>Price</th>
-            <th>Item</th><th>Price</th>
-          </tr>
+          
         </thead>
         <tbody>`;
 
