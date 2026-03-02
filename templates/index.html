@@ -29,13 +29,7 @@
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
 
-  body {
-    font-family: 'Outfit', sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    min-height: 100vh;
-    font-size: 16px;
-  }
+  body { font-family: 'Outfit', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; font-size: 16px; }
 
   .app-header {
     background: linear-gradient(135deg, #070b18 0%, #0a1020 100%);
@@ -71,7 +65,7 @@
   }
 
   input[type="date"]::-webkit-calendar-picker-indicator {
-    filter: invert(1) brightness(10);
+    filter: brightness(0) invert(1);
     cursor: pointer;
     width: 20px;
     height: 20px;
@@ -112,6 +106,96 @@
 
   .btn-add:active { background: var(--accent2); }
 
+  /* BULK IMPORT TOGGLE */
+  .bulk-toggle {
+    text-align: center;
+    margin-top: 2px;
+  }
+
+  .btn-bulk-toggle {
+    background: none;
+    border: none;
+    color: var(--muted);
+    font-family: 'Outfit', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 4px 8px;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .btn-bulk-toggle:active { color: var(--accent); }
+
+  /* BULK IMPORT PANEL */
+  .bulk-panel {
+    display: none;
+    flex-direction: column;
+    gap: 10px;
+    background: var(--surface2);
+    border: 1.5px solid var(--border);
+    border-radius: 12px;
+    padding: 14px;
+    margin-top: 4px;
+  }
+
+  .bulk-panel.open { display: flex; }
+
+  .bulk-panel-title { font-size: 14px; font-weight: 700; color: #fff; }
+  .bulk-panel-hint { font-size: 12px; color: var(--muted); line-height: 1.5; }
+
+  .bulk-month-row { display: flex; gap: 8px; }
+
+  .bulk-select {
+    flex: 1;
+    background: var(--surface3);
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    color: var(--text);
+    font-family: 'Outfit', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 10px 12px;
+    outline: none;
+    appearance: none;
+    -webkit-appearance: none;
+    cursor: pointer;
+  }
+
+  .bulk-textarea {
+    width: 100%;
+    background: var(--surface3);
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    color: var(--text);
+    font-family: 'Outfit', sans-serif;
+    font-size: 14px;
+    padding: 12px 14px;
+    outline: none;
+    resize: vertical;
+    min-height: 140px;
+    line-height: 1.6;
+    transition: border-color 0.2s;
+  }
+
+  .bulk-textarea::placeholder { color: var(--muted); }
+  .bulk-textarea:focus { border-color: var(--accent); }
+
+  .btn-bulk-import {
+    background: linear-gradient(135deg, #065f46, #10b981);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    padding: 12px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    width: 100%;
+  }
+
+  .btn-bulk-import:active { opacity: 0.85; }
+
   .main-content { padding: 16px; }
 
   /* MODAL */
@@ -150,8 +234,7 @@
     margin-bottom: 12px;
   }
 
-  .cat-item-name { font-size: 16px; font-weight: 700; margin-bottom: 10px; color: var(--text); }
-
+  .cat-item-name { font-size: 15px; font-weight: 700; margin-bottom: 10px; color: var(--text); }
   .cat-buttons { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
 
   .cat-btn {
@@ -237,32 +320,15 @@
   .month-name { font-size: 17px; font-weight: 800; color: #fff; }
   .month-total { font-size: 17px; font-weight: 800; color: var(--accent); }
 
-  .table-wrap {
-    overflow-x: auto;
-    border: 1px solid var(--border);
-    border-top: none;
-    border-radius: 0 0 12px 12px;
-  }
+  .table-wrap { overflow-x: auto; border: 1px solid var(--border); border-top: none; border-radius: 0 0 12px 12px; }
 
   table { width: 100%; border-collapse: collapse; min-width: 760px; }
 
   thead tr.row-cat th {
     background: var(--heading-bg);
-    padding: 10px 8px 4px;
+    padding: 10px 8px 10px;
     font-size: 13px;
     font-weight: 800;
-    text-align: center;
-    border-bottom: none;
-    white-space: nowrap;
-    border-right: 1px solid var(--border);
-  }
-
-  thead tr.row-sub th {
-    background: var(--heading-bg);
-    padding: 4px 8px 10px;
-    font-size: 11px;
-    font-weight: 600;
-    color: var(--muted);
     text-align: center;
     border-bottom: 2px solid var(--border);
     border-right: 1px solid var(--border);
@@ -272,7 +338,6 @@
   th.th-date   { text-align: left; vertical-align: middle; border-right: 1px solid var(--border); }
   th.th-total-h { text-align: right; vertical-align: middle; color: #fff; border-right: 1px solid var(--border); }
   th.th-del-h  { width: 10px; vertical-align: middle; }
-
   th.th-transport { color: var(--transport); }
   th.th-snacks    { color: var(--snacks); }
   th.th-food      { color: var(--food); }
@@ -311,7 +376,6 @@
   tr.totals-row td.tot-grand { text-align: right; color: var(--accent); font-size: 14px; }
 
   .item-lines { display: flex; flex-direction: column; gap: 4px; }
-
   .item-line { display: flex; align-items: center; gap: 4px; font-size: 13px; line-height: 1.4; }
   .price-line { font-size: 13px; line-height: 1.4; text-align: right; }
 
@@ -366,6 +430,26 @@
       <input class="expense-input" id="expenseInput" type="text" placeholder=""/>
       <button class="btn-add" onclick="handleAdd()">ADD</button>
     </div>
+    <div class="bulk-toggle">
+      <button class="btn-bulk-toggle" onclick="toggleBulk()">+ Bulk Import</button>
+    </div>
+    <div class="bulk-panel" id="bulkPanel">
+      <div class="bulk-panel-title">Bulk Import</div>
+      <div class="bulk-panel-hint">Format: one day per line<br>3 - Uber 60, pant 149<br>4 - ny 65, puffs 30</div>
+      <div class="bulk-month-row">
+        <select class="bulk-select" id="bulkMonth">
+          <option value="1">January</option><option value="2">February</option>
+          <option value="3">March</option><option value="4">April</option>
+          <option value="5">May</option><option value="6">June</option>
+          <option value="7">July</option><option value="8">August</option>
+          <option value="9">September</option><option value="10">October</option>
+          <option value="11">November</option><option value="12">December</option>
+        </select>
+        <select class="bulk-select" id="bulkYear"></select>
+      </div>
+      <textarea class="bulk-textarea" id="bulkText" placeholder="3 - Uber 60, pant 149&#10;4 - ny 65, puffs 30&#10;5 - Uber 58, lunch 60"></textarea>
+      <button class="btn-bulk-import" onclick="handleBulkImport()">Import All</button>
+    </div>
   </div>
 </div>
 
@@ -382,6 +466,7 @@
   <div class="empty-state">No expenses yet. Add your first entry above!</div>
 </div>
 
+<!-- Category Modal -->
 <div class="modal-overlay" id="modalOverlay">
   <div class="modal">
     <h2>Categorise Items</h2>
@@ -398,7 +483,23 @@
 <script>
 const CATEGORIES = ["Transport", "Snacks/Orders", "Food", "Specials", "Others"];
 const CAT_KEY = { "Transport":"Transport", "Snacks/Orders":"Snacks", "Food":"Food", "Specials":"Specials", "Others":"Others" };
+
 let pendingData = null;
+// For bulk import: queue of entries to process
+let bulkQueue = [];
+let bulkItemCategories = {};
+
+// Populate year dropdown
+const yearSel = document.getElementById("bulkYear");
+const curYear = new Date().getFullYear();
+for (let y = curYear; y >= curYear - 5; y--) {
+  const opt = document.createElement("option");
+  opt.value = y; opt.textContent = y;
+  yearSel.appendChild(opt);
+}
+
+// Set current month in bulk selector
+document.getElementById("bulkMonth").value = new Date().getMonth() + 1;
 
 function todayInputVal() {
   const now = new Date();
@@ -411,6 +512,14 @@ function inputValToDisplay(val) {
 
 document.getElementById("dateInput").value = todayInputVal();
 
+function toggleBulk() {
+  const panel = document.getElementById("bulkPanel");
+  panel.classList.toggle("open");
+  const btn = document.querySelector(".btn-bulk-toggle");
+  btn.textContent = panel.classList.contains("open") ? "− Close Bulk Import" : "+ Bulk Import";
+}
+
+// ── SINGLE ENTRY ──────────────────────────────────────────────
 async function handleAdd() {
   const dateVal = document.getElementById("dateInput").value;
   const raw = document.getElementById("expenseInput").value.trim();
@@ -432,11 +541,83 @@ async function handleAdd() {
 
   pendingData = { date: inputValToDisplay(dateVal), input: raw, item_categories: { ...known } };
 
-  if (unknown.length > 0) showModal(unknown);
+  if (unknown.length > 0) showModal(unknown, "single");
   else await submitEntry();
 }
 
-function showModal(unknownItems) {
+// ── BULK IMPORT ────────────────────────────────────────────────
+async function handleBulkImport() {
+  const month = document.getElementById("bulkMonth").value.padStart(2, "0");
+  const year = document.getElementById("bulkYear").value;
+  const text = document.getElementById("bulkText").value.trim();
+
+  if (!text) { showToast("Please paste your expenses", "#ef4444"); return; }
+
+  const lines = text.split("\n").map(l => l.trim()).filter(l => l);
+  const parsed = [];
+
+  for (const line of lines) {
+    // Format: "3 - Uber 60, pant 149"
+    const dashIdx = line.indexOf("-");
+    if (dashIdx === -1) continue;
+    const day = line.substring(0, dashIdx).trim();
+    const expensePart = line.substring(dashIdx + 1).trim();
+    if (!day || !expensePart) continue;
+    const date = `${day.padStart(2,"0")}/${month}/${year}`;
+    parsed.push({ date, input: expensePart });
+  }
+
+  if (parsed.length === 0) { showToast("No valid lines found", "#ef4444"); return; }
+
+  // Collect ALL unique item names across all days
+  const allItemNames = [];
+  for (const entry of parsed) {
+    const parts = entry.input.split(",").map(p => p.trim()).filter(Boolean);
+    for (const part of parts) {
+      const tokens = part.trim().split(" ");
+      const name = tokens.slice(0, tokens.length - 1).join(" ").trim();
+      if (name && !allItemNames.includes(name)) allItemNames.push(name);
+    }
+  }
+
+  // Check which are unknown
+  const res = await fetch("/api/check_items", {
+    method: "POST", headers: {"Content-Type":"application/json"},
+    body: JSON.stringify({ items: allItemNames })
+  });
+  const { unknown, known } = await res.json();
+
+  bulkQueue = parsed;
+  bulkItemCategories = { ...known };
+
+  if (unknown.length > 0) {
+    showModal(unknown, "bulk");
+  } else {
+    await submitBulk();
+  }
+}
+
+async function submitBulk() {
+  let saved = 0;
+  for (const entry of bulkQueue) {
+    await fetch("/api/add_entry", {
+      method: "POST", headers: {"Content-Type":"application/json"},
+      body: JSON.stringify({ date: entry.date, input: entry.input, item_categories: bulkItemCategories })
+    });
+    saved++;
+  }
+  bulkQueue = [];
+  bulkItemCategories = {};
+  document.getElementById("bulkText").value = "";
+  showToast(`${saved} days imported!`);
+  renderAll();
+}
+
+// ── MODAL ──────────────────────────────────────────────────────
+let modalMode = "single";
+
+function showModal(unknownItems, mode) {
+  modalMode = mode;
   const container = document.getElementById("modalItems");
   container.innerHTML = "";
   unknownItems.forEach(item => {
@@ -456,18 +637,20 @@ function selectCat(btn, item) {
   btn.closest(".cat-item").querySelectorAll(".cat-btn").forEach(b => b.className = "cat-btn");
   const cat = btn.dataset.cat;
   btn.className = `cat-btn sel-${CAT_KEY[cat]}`;
-  pendingData.item_categories[item] = cat;
+  if (modalMode === "single") pendingData.item_categories[item] = cat;
+  else bulkItemCategories[item] = cat;
 }
 
 async function confirmCategories() {
   const items = document.querySelectorAll("#modalItems .cat-item");
   for (const item of items) {
-    if (!pendingData.item_categories[item.dataset.item]) {
-      showToast("Please categorise all items", "#ef4444"); return;
-    }
+    const name = item.dataset.item;
+    const assigned = modalMode === "single" ? pendingData.item_categories[name] : bulkItemCategories[name];
+    if (!assigned) { showToast("Please categorise all items", "#ef4444"); return; }
   }
   document.getElementById("modalOverlay").classList.remove("active");
-  await submitEntry();
+  if (modalMode === "single") await submitEntry();
+  else await submitBulk();
 }
 
 async function submitEntry() {
@@ -551,7 +734,6 @@ async function renderAll() {
             <th class="th-total-h">Total</th>
             <th class="th-del-h"></th>
           </tr>
-          
         </thead>
         <tbody>`;
 
@@ -587,7 +769,6 @@ async function renderAll() {
       </tr>`;
     }
 
-    // Totals row
     const fmtTot = (n) => n > 0 ? `₹${fmt(n)}` : `--`;
     html += `<tr class="totals-row">
       <td class="tot-label">TOTAL</td>
@@ -605,7 +786,6 @@ async function renderAll() {
 
   container.innerHTML = html;
 
-  // Populate PDF month selector
   const sel = document.getElementById("pdfMonthSelect");
   const prevVal = sel.value;
   sel.innerHTML = `<option value="all">All Months</option>`;
@@ -698,12 +878,9 @@ async function exportPDF() {
       },
       columnStyles: {
         0: { cellWidth: 22, fontStyle: "bold" },
-        1: { cellWidth: 40 },
-        2: { cellWidth: 44 },
-        3: { cellWidth: 40 },
-        4: { cellWidth: 40 },
-        5: { cellWidth: 40 },
-        6: { cellWidth: 30, fontStyle: "bold", halign: "right" }
+        1: { cellWidth: 40 }, 2: { cellWidth: 44 },
+        3: { cellWidth: 40 }, 4: { cellWidth: 40 },
+        5: { cellWidth: 40 }, 6: { cellWidth: 30, fontStyle: "bold", halign: "right" }
       },
       margin: { left: 14, right: 14 },
     });
